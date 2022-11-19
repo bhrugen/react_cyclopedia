@@ -34,10 +34,31 @@ class CyclOPediaClassPage extends React.Component {
     }
   };
 
-  componentDidUpdate() {
+  componentDidUpdate = async (previousProps, previousState) => {
     console.log("Component Did Update");
     localStorage.setItem("cylcopediaState", JSON.stringify(this.state));
-  }
+    console.log("Old State - " + previousState.studentCount);
+    console.log("New State - " + this.state.studentCount);
+    if (previousState.studentCount < this.state.studentCount) {
+      const response = await getRandomUser();
+      this.setState((prevState) => {
+        return {
+          studentList: [
+            ...prevState.studentList,
+            {
+              name: response.data.first_name + " " + response.data.last_name,
+            },
+          ],
+        };
+      });
+    } else if (previousState.studentCount > this.state.studentCount) {
+      this.setState((prevState) => {
+        return {
+          studentList: [],
+        };
+      });
+    }
+  };
 
   componentWillUnmount() {
     console.log("Component Will UnMount");
@@ -122,6 +143,13 @@ class CyclOPediaClassPage extends React.Component {
           >
             Remove All Students
           </button>
+          {this.state.studentList.map((student, index) => {
+            return (
+              <div className="text-white" key={index}>
+                - {student.name}
+              </div>
+            );
+          })}
         </div>
       </div>
     );
