@@ -100,7 +100,7 @@ class CyclOPediaClassPage extends React.Component {
             } btn btn-success btn-sm`}
             onClick={this.handletoggleInstructor}
           ></i>
-          {!this.state.hideInstructor ? (
+          {!this.state.hideInstructor && this.state.instructor ? (
             <Instructor instructor={this.state.instructor} />
           ) : null}
         </div>
