@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Instructor from "./Instructor";
 import { getRandomUser } from "./Utility/api";
 
@@ -18,6 +18,27 @@ const CyclOPediaFuncPage = () => {
   const [inputFeedback, setInputFeedback] = useState(() => {
     return "";
   });
+
+  useEffect(() => {
+    console.log("This will be called on EVERY Render");
+  });
+
+  useEffect(() => {
+    console.log("This will be called on Initial/first Render/Mount");
+  }, []);
+
+  useEffect(() => {
+    console.log(
+      "This will be called on whenever value of hideInstructor changes"
+    );
+  }, [inputFeedback, inputName]);
+
+  useEffect(() => {
+    console.log("This will be called on Initial/first Render/Mount");
+    return () => {
+      console.log("This will be called on when component will be UNMOUNTED");
+    };
+  }, []);
 
   // constructor(props) {
   //   super(props);
@@ -99,7 +120,7 @@ const CyclOPediaFuncPage = () => {
   };
 
   const handletoggleInstructor = () => {
-    this.setState((prevState) => {
+    setState((prevState) => {
       return {
         ...prevState,
         hideInstructor: !prevState.hideInstructor,
