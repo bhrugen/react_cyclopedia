@@ -39,8 +39,10 @@ const CyclOPediaFuncPage = () => {
         };
       });
     };
-    getUser();
-  }, []);
+    if (state.hideInstructor) {
+      getUser();
+    }
+  }, [state.hideInstructor]);
 
   useEffect(() => {
     console.log(
